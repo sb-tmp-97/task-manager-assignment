@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,31 +16,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Admin User',
-            'role' => 'manager',
-            'email' => 'admin@example.com',
-        ]);
+        $users = User::factory(5)
+            ->sequence(function (Sequence $sequence) {
 
-        User::factory()->create([
-            'name' => 'First Normal User',
-            'role' => 'user',
-            'email' => 'user1@example.com',
-        ]);
+                $role = $sequence->index === 0 ? 'admin' : 'user';
 
-        User::factory()->create([
-            'name' => 'Second Normal User',
-            'role' => 'user',
-            'email' => 'user2@example.com',
-        ]);
+                return [
+                    'email' => $role . '.' . ($sequence->index + 1) . '@example.com',
+                    'role' => $role
+                ];
+
+            })
+            ->create();
 
         Project::factory(5)
             ->has(
-                Task::factory()
-                    ->hasUsers(rand(1, 2))
-                    ->count(rand(3, 6))
+                Task::factory(rand(3, 6))
+                    ->hasAttached($users->take(rand(0, 3)))
             )
             ->create();
 
