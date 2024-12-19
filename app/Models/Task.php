@@ -22,6 +22,7 @@ class Task extends Model
     {
         return [
             'completed' => 'boolean',
+            'due_date' => 'datetime',
         ];
     }
 
