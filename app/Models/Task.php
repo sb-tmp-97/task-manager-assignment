@@ -22,9 +22,19 @@ class Task extends Model
     {
         return [
             'completed' => 'boolean',
-            'due_date' => 'datetime',
+            'due_date' => 'date',
         ];
     }
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'title',
+        'due_date',
+    ];
 
     /**
      * Assigned users

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->timestamp('due_date')->nullable();
+            $table->date('due_date')->nullable();
             $table->boolean('completed')->default(false);
             $table->timestamps();
             $table->softDeletes();
