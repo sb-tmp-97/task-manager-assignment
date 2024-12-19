@@ -1,15 +1,11 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\ProjectsController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('/', function () {
-        return Inertia::render('Projects/Overview');
-    })->name('projects.overview');
+    Route::get('/', [ProjectsController::class, 'index'])->name('projects.overview');
 
 });
 

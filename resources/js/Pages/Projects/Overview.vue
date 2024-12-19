@@ -1,6 +1,11 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import ProjectCard from "@/Pages/Projects/Components/ProjectCard.vue";
+
+defineProps({
+    projects: Array
+});
 </script>
 
 <template>
@@ -12,11 +17,14 @@ import { Head } from '@inertiajs/vue3';
                 <h2 class="text-xl font-semibold leading-tight text-gray-800 mb-8">
                     Projects
                 </h2>
-                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">
-                        You're logged in!
-                    </div>
-                </div>
+
+                <ul role="list" class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+                    <ProjectCard
+                        :key="project.id"
+                        :project="project"
+                        v-for="project in projects"
+                    />
+                </ul>
             </div>
         </div>
     </AuthenticatedLayout>
