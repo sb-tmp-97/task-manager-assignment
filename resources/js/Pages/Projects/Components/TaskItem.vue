@@ -38,7 +38,7 @@ const assignedTo = computed(() => {
                 <p class="whitespace-nowrap" v-if="task.due_date">
                     Due on {{ task.due_date }}
                 </p>
-                <svg viewBox="0 0 2 2" class="size-0.5 fill-current" v-if="(task.due_date && task.assigned_to)">
+                <svg viewBox="0 0 2 2" class="size-0.5 fill-current" v-if="(task.due_date && assignedTo)">
                     <circle cx="1" cy="1" r="1" />
                 </svg>
                 <p class="truncate" v-if="assignedTo">Assigned to {{ assignedTo }}</p>
