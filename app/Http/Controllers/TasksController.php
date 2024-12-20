@@ -106,7 +106,7 @@ class TasksController extends Controller
     /**
      * Complete the task
      */
-    public function complete(Project $project, Task $task)
+    public function complete(Project $project, Task $task): RedirectResponse
     {
 
         /**
@@ -115,7 +115,7 @@ class TasksController extends Controller
         Gate::authorize('update', $task);
 
         /**
-         * Soft delete task
+         * Mark as completed
          */
         $task->completed = true;
         $task->save();
@@ -130,7 +130,7 @@ class TasksController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Project $project, Task $task)
+    public function destroy(Project $project, Task $task): RedirectResponse
     {
 
         /**
