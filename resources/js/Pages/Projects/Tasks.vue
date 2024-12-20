@@ -24,7 +24,7 @@ const createModalOpen = ref(false);
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between mb-8">
                     <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                        {{ project.title }}
+                        {{ project.title }}: Tasks
                     </h2>
 
                     <button type="button" class="rounded-full bg-slate-600 p-1.5 text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" @click.prevent="createModalOpen = true" v-if="can.create">
