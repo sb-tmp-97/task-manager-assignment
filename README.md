@@ -15,17 +15,13 @@ php artisan key:generate
 ```
 npm run dev
 ```
-#### 4. Serve application using Laravel Sail (optional)
+#### 4. Serve application
 ```
-./vendor/bin/sail up
+php artisan serve
 ```
 #### 5. Run migrations and seed database
 ```
 php artisan migrate:refresh --seed
-```
-or when using Sail
-```
-./vendor/bin/sail artisan migrate:refresh --seed
 ```
 The seeder will create 5 users with the following e-mails
 - `admin.1@example.com`
