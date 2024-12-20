@@ -1,10 +1,14 @@
 <script setup>
-
-import {computed} from "vue";
+import { CheckIcon, TrashIcon } from '@heroicons/vue/20/solid'
+import {computed, inject} from "vue";
+import { Link } from '@inertiajs/vue3'
 
 const props = defineProps({
+    project: Object,
     task: Object,
 });
+
+const route = inject('route');
 
 const assignedTo = computed(() => {
 
@@ -24,7 +28,7 @@ const assignedTo = computed(() => {
 
     return names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1]; // Multiple names, format as "name, name and name"
 
-})
+});
 </script>
 
 <template>
@@ -44,10 +48,14 @@ const assignedTo = computed(() => {
                 <p class="truncate" v-if="assignedTo">Assigned to {{ assignedTo }}</p>
             </div>
         </div>
-        <div class="flex flex-none items-center gap-x-4">
-            <button class="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block">
-                View Task
-            </button>
+        <div class="flex flex-none items-center gap-x-2">
+            <Link :href="route('projects.tasks.complete', {project: project.id, task: task.id})" method="put" as="button" type="button" class="relative inline-flex items-center rounded-md bg-white px-2 py-2 text-slate-800 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10 disabled:text-gray-300" v-if="!task.completed && task.can.complete">
+                <CheckIcon class="size-4" aria-hidden="true" />
+            </Link>
+
+            <Link :href="route('projects.tasks.destroy', {project: project.id, task: task.id})" method="delete" as="button" type="button" class="relative -ml-px inline-flex items-center rounded-md bg-white px-2 py-2 text-slate-800 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10  disabled:text-gray-300 disabled:cursor-not-allowed" v-if="task.can.delete">
+                <TrashIcon class="size-4" aria-hidden="true" />
+            </Link>
         </div>
     </li>
 </template>

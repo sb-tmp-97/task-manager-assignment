@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -40,6 +41,10 @@ class TasksController extends Controller
                     'due_date' => $task->due_date?->toFormattedDateString(),
                     'completed' => $task->completed,
                     'assigned_to' => $task->users->pluck('name', 'id'),
+                    'can' => [
+                        'complete' => auth()->user()->can('update', $task),
+                        'delete' => auth()->user()->can('delete', $task),
+                    ],
                 ];
 
             });
@@ -48,6 +53,9 @@ class TasksController extends Controller
          * Return Inertia Render
          */
         return Inertia::render('Projects/Tasks', [
+            'can' => [
+                'create' => auth()->user()->can('create', Task::class),
+            ],
             'project' => $project->only(['id', 'title']),
             'users' => $users,
             'tasks' => $tasks,
@@ -60,6 +68,11 @@ class TasksController extends Controller
      */
     public function store(TaskStoreRequest $request, Project $project): RedirectResponse
     {
+
+        /**
+         * Authorization
+         */
+        Gate::authorize('create', Task::class);
 
         /**
          * Create Task
@@ -90,10 +103,49 @@ class TasksController extends Controller
     }
 
     /**
+     * Complete the task
+     */
+    public function complete(Project $project, Task $task)
+    {
+
+        /**
+         * Authorization
+         */
+        Gate::authorize('update', $task);
+
+        /**
+         * Soft delete task
+         */
+        $task->completed = true;
+        $task->save();
+
+        /**
+         * Redirect back to overview
+         */
+        return redirect()->route('projects.tasks.index', $project->id);
+
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(Project $project, Task $task)
     {
-        //
+
+        /**
+         * Authorization
+         */
+        Gate::authorize('delete', $task);
+
+        /**
+         * Soft delete task
+         */
+        $task->delete();
+
+        /**
+         * Redirect back to overview
+         */
+        return redirect()->route('projects.tasks.index', $project->id);
+
     }
 }

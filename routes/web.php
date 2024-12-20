@@ -18,6 +18,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'store' => 'projects.tasks.store',
             'destroy' => 'projects.tasks.destroy',
         ]);
+    Route::put('projects/{project}/tasks/{task}/complete', [TasksController::class, 'complete'])
+        ->name('projects.tasks.complete');
 
 });
 

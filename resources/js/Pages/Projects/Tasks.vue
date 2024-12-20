@@ -10,6 +10,7 @@ defineProps({
     project: Object,
     tasks: Array,
     users: Object,
+    can: Object,
 });
 
 const createModalOpen = ref(false);
@@ -26,18 +27,22 @@ const createModalOpen = ref(false);
                         {{ project.title }}
                     </h2>
 
-                    <button type="button" class="rounded-full bg-slate-600 p-1.5 text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" @click.prevent="createModalOpen = true">
+                    <button type="button" class="rounded-full bg-slate-600 p-1.5 text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" @click.prevent="createModalOpen = true" v-if="can.create">
                         <PlusIcon class="size-5" aria-hidden="true" />
                     </button>
                 </div>
 
-                <ul role="list" class="divide-y divide-gray-100 overflow-hidden bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
+                <ul role="list" class="divide-y divide-gray-100 overflow-hidden bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl" v-if="tasks.length > 0">
                     <TaskItem
                         :key="task.id"
+                        :project="project"
                         :task="task"
                         v-for="task in tasks"
                     />
                 </ul>
+                <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl py-8 text-center text-sm" v-else>
+                    There are no tasks for this project.
+                </div>
             </div>
         </div>
     </AuthenticatedLayout>
