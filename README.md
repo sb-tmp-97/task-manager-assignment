@@ -11,17 +11,13 @@ Copy `.env.example` to `.env`. After doing so, run the following command to gene
 ```
 php artisan key:generate
 ```
-#### 3. Generate assets
+#### 3. Run migrations and create SQLite database
 ```
-npm run dev
+php artisan migrate
 ```
-#### 4. Serve application
+#### 4. Seed database
 ```
-php artisan serve
-```
-#### 5. Run migrations and seed database
-```
-php artisan migrate:refresh --seed
+php artisan db:seed
 ```
 The seeder will create 5 users with the following e-mails
 - `admin.1@example.com`
@@ -31,3 +27,12 @@ The seeder will create 5 users with the following e-mails
 - `user.5@example.com`
 
 The default password for these users is `password`
+#### 5. Generate assets
+```
+npm run dev
+```
+#### 6. Serve application
+```
+php artisan serve
+```
+You can now visit the url in the CLI and login using one of the seeded users.
