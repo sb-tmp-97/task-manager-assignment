@@ -30,7 +30,8 @@ class TasksController extends Controller
         $tasks = $project
             ->tasks()
             ->with('users')
-            ->orderByDesc('created_at')
+            ->orderByRaw('due_date IS NULL')
+            ->orderBy('due_date')
             ->get()
             ->map(function ($task) {
 
