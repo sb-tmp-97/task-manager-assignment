@@ -9,9 +9,15 @@ use Inertia\Response;
 class ProjectsController extends Controller
 {
 
+    /**
+     * Display a listing of the resource.
+     */
     public function index(): Response
     {
 
+        /**
+         * Get and map projects
+         */
         $projects = Project::query()
             ->with('tasks')
             ->get()
@@ -26,6 +32,9 @@ class ProjectsController extends Controller
 
             });
 
+        /**
+         * Return Inertia Render
+         */
         return Inertia::render('Projects/Overview', [
             'projects' => $projects,
         ]);

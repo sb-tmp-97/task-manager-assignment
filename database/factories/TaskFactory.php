@@ -20,7 +20,7 @@ class TaskFactory extends Factory
     {
         return [
             'title' => fake()->words(rand(1, 4), true),
-            'description' => implode('<br><br>', fake()->paragraphs(2)),
+            'description' => implode('<br><br>', fake()->paragraphs(2)), // basic html description
             'completed' => fake()->boolean(),
             'due_date' => fake()->boolean() ?  now()->addDays(rand(2, 14)) : null, // optional due date
         ];

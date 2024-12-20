@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
+        /**
+         * Create 1 admin and 4 normal users
+         */
         $users = User::factory(5)
             ->sequence(function (Sequence $sequence) {
 
@@ -30,9 +33,15 @@ class DatabaseSeeder extends Seeder
             })
             ->create();
 
+        /**
+         * Create projects
+         */
         $projects = Project::factory(5)
             ->create();
 
+        /**
+         * Create random amount of tasks to each project which are assigned to random amount of users.
+         */
         foreach($projects as $project) {
 
             Task::factory(rand(3, 6))
