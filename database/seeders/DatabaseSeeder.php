@@ -30,12 +30,26 @@ class DatabaseSeeder extends Seeder
             })
             ->create();
 
-        Project::factory(5)
-            ->has(
-                Task::factory(rand(3, 6))
-                    ->hasAttached($users->take(rand(0, 3)))
-            )
+        $projects = Project::factory(5)
             ->create();
+
+        foreach($projects as $project) {
+
+            Task::factory(rand(3, 6))
+                ->create([
+                    'project_id' => $project->id,
+                ])
+                ->each(function ($task) use ($users) {
+
+                    foreach($users->shuffle()->take(rand(0, 3)) as $user) {
+
+                        $task->users()->attach($user);
+
+                    }
+
+                });
+
+        }
 
     }
 }
