@@ -32,7 +32,7 @@ const createModalOpen = ref(false);
                     </button>
                 </div>
 
-                <ul role="list" class="divide-y divide-gray-100 overflow-hidden bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl" v-if="tasks.length > 0">
+                <ul role="list" class="space-y-4" v-if="tasks.length > 0">
                     <TaskItem
                         :key="task.id"
                         :project="project"
